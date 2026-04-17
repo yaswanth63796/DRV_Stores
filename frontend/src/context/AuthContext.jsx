@@ -28,14 +28,14 @@ export const AuthProvider = ({ children }) => {
         throw new Error(response.data.error);
       }
       
-      const { token, username: resUsername, authorities } = response.data;
+      const { token, username: resUsername, authorities, id } = response.data;
       // Spring Security authorities are objects like { authority: "ROLE_CUSTOMER" }
       const authorityString = authorities?.[0]?.authority || authorities?.[0] || '';
       const role = typeof authorityString === 'string' 
         ? authorityString.replace('ROLE_', '').toLowerCase() 
         : 'customer';
       
-      const loggedUser = { username: resUsername, role };
+      const loggedUser = { username: resUsername, role, id };
       
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(loggedUser));

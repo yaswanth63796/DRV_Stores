@@ -2,8 +2,8 @@ import api from './api';
 
 export const getOrders = () => api.get('/orders');
 export const getMyOrders = () => {
-  const userId = localStorage.getItem('userId');
-  return api.get(`/orders?userId=${userId}`);
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  return api.get(`/orders?userId=${user.id}`);
 };
 export const createOrder = (orderData) => api.post('/orders', orderData);
 export const getOrder = (id) => api.get(`/orders/${id}`);
