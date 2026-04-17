@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import api from '../services/api';
 import { login as apiLogin, register as apiRegister } from '../services/authService';
 
 const AuthContext = createContext();
@@ -13,34 +12,35 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
-    if (token && userId) {
-      api.get(`/users/${userId}`)
-        .then(response => {
-          setUser(response.data);
-        })
-        .catch(() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('userId');
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+    const storedUser = localStorage.getItem('user');
+    if (token && storedUser) {
+      setUser(JSON.parse(storedUser));
     }
+    setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (username, password) => {
     try {
       setError(null);
-      const response = await apiLogin({ email, password });
-      const { token, user } = response.data;
+      const response = await apiLogin({ username, password });
+      
+      if (response.data && response.data.error) {
+        throw new Error(response.data.error);
+      }
+      
+      const { token, username: resUsername, authorities } = response.data;
+      const role = authorities?.[0]?.replace('ROLE_', '').toLowerCase() || 'customer';
+      
+      const loggedUser = { username: resUsername, role };
+      
       localStorage.setItem('token', token);
-      localStorage.setItem('userId', user.id);
-      setUser(user);
-      return { success: true };
+      localStorage.setItem('user', JSON.stringify(loggedUser));
+      setUser(loggedUser);
+      return { success: true, user: loggedUser };
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
-      return { success: false, error: err.response?.data?.message };
+      const errorMessage = err.response?.data?.error || err.response?.data?.message || err.message || 'Login failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 
@@ -48,21 +48,23 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
       const response = await apiRegister(userData);
-      const user = response.data;
-      const token = 'dummy-token-' + user.id;
-      localStorage.setItem('token', token);
-      localStorage.setItem('userId', user.id);
-      setUser(user);
-      return { success: true };
+      
+      if (response.data && response.data.error) {
+        throw new Error(response.data.error);
+      }
+
+      const loginResp = await login(userData.username, userData.password);
+      return loginResp;
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
-      return { success: false, error: err.response?.data?.message };
+      const errorMessage = err.response?.data?.error || err.response?.data?.message || err.message || 'Registration failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('user');
     setUser(null);
   };
 

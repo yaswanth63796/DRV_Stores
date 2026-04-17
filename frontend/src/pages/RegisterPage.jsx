@@ -7,10 +7,11 @@ import '../styles/AuthPage.css';
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
+    name: '',
     username: '',
     email: '',
     password: '',
-    role: 'customer' // Enforced role per user requirement
+    role: 'CUSTOMER' // Enforced role per user requirement
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -53,13 +54,24 @@ const RegisterPage = () => {
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label>Name</label>
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="John Doe"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Username</label>
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              placeholder="John Doe"
+              placeholder="johndoe123"
               required
             />
           </div>
