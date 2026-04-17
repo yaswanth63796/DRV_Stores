@@ -24,6 +24,7 @@ public class BillItem {
     
     @ManyToOne
     @JoinColumn(name = "bill_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Bill bill;
 
     // Getters and Setters

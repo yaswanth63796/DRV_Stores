@@ -1,0 +1,130 @@
+.orders-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.orders-page h1 {
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+  font-family: 'Outfit', sans-serif;
+}
+
+.orders-container {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.orders-table th, 
+.orders-table td {
+  padding: 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.orders-table th {
+  background-color: #f8faf9;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.status-select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.status-badge.shipped { background-color: #ebf8ff; color: #2b6cb0; }
+.status-badge.delivered { background-color: #f0fff4; color: #2f855a; }
+.status-badge.cancelled { background-color: #fff5f5; color: #c53030; }
+
+.details-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.details-modal {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+.details-modal h2 {
+  margin-bottom: 1.5rem;
+  font-family: 'Outfit', sans-serif;
+  color: #2d3748;
+}
+
+.customer-info {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.customer-info p {
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+}
+
+.items-list-detail {
+  margin-top: 1rem;
+}
+
+.item-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed #edf2f7;
+}
+
+.item-detail-row:last-child {
+  border-bottom: none;
+}
+
+.total-row {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
+  color: var(--primary-color);
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #a0aec0;
+}
+
+.close-modal-btn:hover {
+  color: #4a5568;
+}

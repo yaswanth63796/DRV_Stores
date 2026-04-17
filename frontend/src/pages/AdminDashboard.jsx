@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getOrders } from '../services/orderService';
-import { generateBill } from '../services/billService';
+import { deleteBill } from '../services/billService';
 import api from '../services/api';
 import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import '../styles/AdminDashboard.css';
 
 const AdminDashboard = () => {
-  const [orders, setOrders] = useState([]);
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -22,11 +20,7 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [ordersRes, billsRes] = await Promise.all([
-        getOrders(),
-        api.get('/bills')
-      ]);
-      setOrders(ordersRes.data);
+      const billsRes = await api.get('/bills');
       setBills(billsRes.data);
     } catch (err) {
       setError('Failed to load data');
@@ -35,35 +29,23 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleGenerateBill = async (order) => {
-    try {
-      // Fetch user details
-      const userRes = await api.get(`/users/${order.userId}`);
-      const user = userRes.data;
-      
-      const billData = {
-        id: Date.now().toString(),
-        orderId: order.id,
-        userId: order.userId,
-        customerName: user.name || user.username || 'Customer',
-        items: order.items,
-        totalAmount: order.totalAmount,
-        paymentMethod: 'cash',
-        status: 'paid',
-        createdAt: new Date().toISOString()
-      };
-      
-      await generateBill(order.id, billData);
-      setSuccess(`Bill generated for Order #${order.id}`);
-      fetchData();
-      setTimeout(() => setSuccess(''), 3000);
-    } catch (err) {
-      setError('Failed to generate bill');
-    }
-  };
+
 
   const handleViewBill = (billId) => {
     navigate(`/shopkeeper/view-bill/${billId}`);
+  };
+
+  const handleDeleteBill = async (billId) => {
+    if (window.confirm('இந்த பில்லை நீக்க விரும்புகிறீர்களா? (Are you sure you want to delete this bill?)')) {
+      try {
+        await deleteBill(billId);
+        setSuccess('பில் வெற்றிகரமாக நீக்கப்பட்டது (Bill deleted successfully)');
+        fetchData();
+        setTimeout(() => setSuccess(''), 3000);
+      } catch (err) {
+        setError('Failed to delete bill');
+      }
+    }
   };
 
   if (loading) return <Spinner />;
@@ -82,48 +64,7 @@ const AdminDashboard = () => {
       {error && <Alert type="error" message={error} onClose={() => setError('')} />}
       {success && <Alert type="success" message={success} onClose={() => setSuccess('')} />}
 
-      <div className="orders-section card">
-        <h2>ஆர்டர்கள் (Orders)</h2>
-        {orders.length === 0 ? (
-          <p>No orders found</p>
-        ) : (
-          <table className="orders-table">
-            <thead>
-              <tr>
-                <th>ஆர்டர் எண் (Order ID)</th>
-                <th>தேதி (Date)</th>
-                <th>பொருட்கள் (Items)</th>
-                <th>மொத்தம் (Total)</th>
-                <th>நிலை (Status)</th>
-                <th>செயல்கள் (Actions)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map(order => (
-                <tr key={order.id}>
-                  <td>#{order.id}</td>
-                  <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                  <td>{order.items.length} items</td>
-                  <td>₹{order.totalAmount}</td>
-                  <td>
-                    <span className={`status-badge ${order.status}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td>
-                    <button 
-                      className="btn btn-primary btn-small"
-                      onClick={() => handleGenerateBill(order)}
-                    >
-                      பில் உருவாக்கு (Generate Bill)
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+
 
       <div className="bills-section card">
         <h2>பில்கள் (Bills)</h2>
@@ -153,6 +94,13 @@ const AdminDashboard = () => {
                       onClick={() => handleViewBill(bill.id)}
                     >
                       பார்க்க (View)
+                    </button>
+                    <button 
+                      className="btn btn-danger btn-small"
+                      onClick={() => handleDeleteBill(bill.id)}
+                      style={{ marginLeft: '10px' }}
+                    >
+                      நீக்கு (Delete)
                     </button>
                   </td>
                 </tr>

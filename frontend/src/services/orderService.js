@@ -7,3 +7,4 @@ export const getMyOrders = () => {
 };
 export const createOrder = (orderData) => api.post('/orders', orderData);
 export const getOrder = (id) => api.get(`/orders/${id}`);
+export const updateOrderStatus = (id, status) => api.put(`/orders/${id}/status`, { status });

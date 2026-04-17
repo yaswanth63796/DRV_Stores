@@ -1,7 +1,11 @@
 package com.telusko.Backend.config;
 
 import com.telusko.Backend.entity.Product;
+import com.telusko.Backend.entity.User;
+import com.telusko.Backend.entity.UserRole;
 import com.telusko.Backend.repository.ProductRepository;
+import com.telusko.Backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,8 +19,28 @@ public class DataSeeder implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public void run(String... args) throws Exception {
+        
+        // Ensure Default Shopkeeper is present
+        if (!userRepository.existsByEmail("Kalavathi123@gmail.com")) {
+            User shopkeeper = new User();
+            shopkeeper.setName("Kalavathi");
+            shopkeeper.setUsername("kalavathi123");
+            shopkeeper.setEmail("Kalavathi123@gmail.com");
+            shopkeeper.setPassword(passwordEncoder.encode("Kalavathi@312"));
+            shopkeeper.setRole(UserRole.SHOPKEEPER);
+            shopkeeper.setPhone("0000000000"); // Generic filler
+            userRepository.save(shopkeeper);
+            System.out.println("✅ Data Seeder: Default Shopkeeper Account Initialized!");
+        }
+
         // Run seed only if the table is empty
         if (productRepository.count() == 0) {
             

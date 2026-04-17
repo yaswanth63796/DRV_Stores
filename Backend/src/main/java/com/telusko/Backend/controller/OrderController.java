@@ -19,9 +19,24 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private com.telusko.Backend.service.UserService userService;
+
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public List<Map<String, Object>> getAllOrders() {
+        return orderService.getAllOrders().stream().map(order -> {
+            Map<String, Object> map = new java.util.HashMap<>();
+            map.put("id", order.getId());
+            map.put("userId", order.getUserId());
+            map.put("status", order.getStatus());
+            map.put("totalAmount", order.getTotalAmount());
+            map.put("createdAt", order.getCreatedAt());
+            map.put("items", order.getItems());
+            
+            com.telusko.Backend.entity.User user = userService.getUserById(order.getUserId());
+            map.put("customerName", user != null ? (user.getName() != null ? user.getName() : user.getUsername()) : "Customer");
+            return map;
+        }).collect(java.util.stream.Collectors.toList());
     }
 
     @GetMapping(params = "userId")

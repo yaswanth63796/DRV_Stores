@@ -39,7 +39,7 @@ const CreateBillPage = () => {
   const updateItem = (index, field, value) => {
     const newItems = [...items];
     if (field === 'productId') {
-      const product = products.find(p => p.id === value);
+      const product = products.find(p => String(p.id) === String(value));
       if (product) {
         newItems[index] = {
           productId: product.id,

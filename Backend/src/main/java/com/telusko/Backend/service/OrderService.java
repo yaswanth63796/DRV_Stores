@@ -40,6 +40,7 @@ public class OrderService {
         
         List<Map<String, Object>> itemsData = (List<Map<String, Object>>) orderRequest.get("items");
         Double totalAmount = 0.0;
+        List<OrderItem> orderItems = new java.util.ArrayList<>();
         
         for (Map<String, Object> itemData : itemsData) {
             OrderItem item = new OrderItem();
@@ -49,10 +50,11 @@ public class OrderService {
             item.setPrice(((Number) itemData.get("price")).doubleValue());
             item.setOrder(order);
             totalAmount += item.getPrice() * item.getQuantity();
+            orderItems.add(item);
         }
         
         order.setTotalAmount(totalAmount);
-        order.setItems(null); // Will be set by cascade
+        order.setItems(orderItems); // Attach the collection for JPA cascade to work
         
         return orderRepository.save(order);
     }

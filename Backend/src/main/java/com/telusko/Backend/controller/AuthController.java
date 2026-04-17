@@ -48,12 +48,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public Map<String, Object> loginUser(@RequestBody Map<String, String> loginRequest) {
-        String username = loginRequest.get("username");
+        String email = loginRequest.get("email");
         String password = loginRequest.get("password");
 
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
+                    new UsernamePasswordAuthenticationToken(email, password)
             );
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -73,5 +73,14 @@ public class AuthController {
             response.put("error", "Invalid credentials");
             return response;
         }
+    }
+
+    @GetMapping("/{id}")
+    public org.springframework.http.ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        if (user != null) {
+            return org.springframework.http.ResponseEntity.ok(user);
+        }
+        return org.springframework.http.ResponseEntity.notFound().build();
     }
 }

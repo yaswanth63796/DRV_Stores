@@ -28,11 +28,11 @@ public class BillService {
     public Bill createBill(Map<String, Object> billRequest) {
         Bill bill = new Bill();
         
-        if (billRequest.containsKey("orderId")) {
+        if (billRequest.containsKey("orderId") && billRequest.get("orderId") != null) {
             bill.setOrderId(((Number) billRequest.get("orderId")).longValue());
         }
         
-        if (billRequest.containsKey("userId")) {
+        if (billRequest.containsKey("userId") && billRequest.get("userId") != null) {
             bill.setUserId(((Number) billRequest.get("userId")).longValue());
         }
         
@@ -42,6 +42,7 @@ public class BillService {
         
         List<Map<String, Object>> itemsData = (List<Map<String, Object>>) billRequest.get("items");
         Double totalAmount = 0.0;
+        List<BillItem> billItems = new java.util.ArrayList<>();
         
         for (Map<String, Object> itemData : itemsData) {
             BillItem item = new BillItem();
@@ -51,10 +52,11 @@ public class BillService {
             item.setPrice(((Number) itemData.get("price")).doubleValue());
             item.setBill(bill);
             totalAmount += item.getPrice() * item.getQuantity();
+            billItems.add(item);
         }
         
         bill.setTotalAmount(totalAmount);
-        bill.setItems(null); // Will be set by cascade
+        bill.setItems(billItems); // Enable properly linking items for Cascade save
         
         return billRepository.save(bill);
     }

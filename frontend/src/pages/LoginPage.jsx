@@ -7,7 +7,7 @@ import '../styles/AuthPage.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    const result = await login(formData.username, formData.password);
+    const result = await login(formData.email, formData.password);
     setLoading(false);
     if (result.success) {
       if (result.user?.role === 'shopkeeper') {
@@ -48,13 +48,13 @@ const LoginPage = () => {
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label>Username</label>
+            <label>Email Address</label>
             <input
-              type="text"
-              name="username"
-              value={formData.username}
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your username"
+              placeholder="Enter your email"
               required
             />
           </div>

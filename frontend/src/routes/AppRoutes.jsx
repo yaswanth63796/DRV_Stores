@@ -14,6 +14,7 @@ import BillPage from '../pages/BillPage';
 import AdminDashboard from '../pages/AdminDashboard';
 import CreateBillPage from '../pages/CreateBillPage';
 import ViewBillPage from '../pages/ViewBillPage';
+import OrdersPage from '../pages/OrdersPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 const AppRoutes = () => {
@@ -27,6 +28,11 @@ const AppRoutes = () => {
       <Route path="/shopkeeper/dashboard" element={
         <PrivateRoute role="shopkeeper">
           <ShopkeeperDashboard />
+        </PrivateRoute>
+      } />
+      <Route path="/shopkeeper/orders" element={
+        <PrivateRoute role="shopkeeper">
+          <OrdersPage />
         </PrivateRoute>
       } />
       <Route path="/shopkeeper/products" element={

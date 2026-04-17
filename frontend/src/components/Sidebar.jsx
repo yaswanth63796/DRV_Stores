@@ -26,6 +26,7 @@ const Sidebar = () => {
           <>
             <p className="menu-label">Main Menu</p>
             <Link to="/shopkeeper/dashboard" className={`sidebar-link ${isActive('/shopkeeper/dashboard') ? 'active' : ''}`}>Dashboard</Link>
+            <Link to="/shopkeeper/orders" className={`sidebar-link ${isActive('/shopkeeper/orders') ? 'active' : ''}`}>Orders</Link>
             <Link to="/shopkeeper/products" className={`sidebar-link ${isActive('/shopkeeper/products') ? 'active' : ''}`}>Products</Link>
             <Link to="/shopkeeper/add-product" className={`sidebar-link ${isActive('/shopkeeper/add-product') ? 'active' : ''}`}>Add Product</Link>
             <Link to="/shopkeeper/create-bill" className={`sidebar-link ${isActive('/shopkeeper/create-bill') ? 'active' : ''}`}>Create Bill</Link>

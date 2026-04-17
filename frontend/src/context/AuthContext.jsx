@@ -19,10 +19,10 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
       setError(null);
-      const response = await apiLogin({ username, password });
+      const response = await apiLogin({ email, password });
       
       if (response.data && response.data.error) {
         throw new Error(response.data.error);
