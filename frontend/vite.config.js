@@ -6,10 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': 'http://127.0.0.1:8081',
-      '/products': 'http://127.0.0.1:8081',
-      '/orders': 'http://127.0.0.1:8081',
-      '/bills': 'http://127.0.0.1:8081'
+      '/api': 'http://127.0.0.1:8081'
     }
   }
 })

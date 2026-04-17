@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
 
     @Autowired
@@ -29,9 +29,11 @@ public class OrderController {
             map.put("id", order.getId());
             map.put("userId", order.getUserId());
             map.put("status", order.getStatus());
+            map.put("paymentStatus", order.getPaymentStatus());
             map.put("totalAmount", order.getTotalAmount());
             map.put("createdAt", order.getCreatedAt());
             map.put("items", order.getItems());
+            map.put("paymentId", order.getRazorpayPaymentId());
             
             com.telusko.Backend.entity.User user = userService.getUserById(order.getUserId());
             map.put("customerName", user != null ? (user.getName() != null ? user.getName() : user.getUsername()) : "Customer");

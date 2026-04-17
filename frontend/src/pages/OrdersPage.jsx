@@ -42,6 +42,19 @@ const OrdersPage = () => {
     setSelectedOrder(order);
   };
 
+  const handleDelete = async (orderId) => {
+    if (window.confirm('இந்த ஆர்டரை நிரந்தரமாக நீக்க விரும்புகிறீர்களா? (Delete this order permanently?)')) {
+      try {
+        await deleteOrder(orderId);
+        setSuccess('ஆர்டர் நீக்கப்பட்டது (Order Deleted)');
+        fetchOrders();
+        setTimeout(() => setSuccess(''), 3000);
+      } catch (err) {
+        setError('Failed to delete order');
+      }
+    }
+  };
+
   if (loading) return <Spinner />;
 
   return (
@@ -58,39 +71,63 @@ const OrdersPage = () => {
               <th>வாடிக்கையாளர் (Customer)</th>
               <th>தேதி (Date)</th>
               <th>மொத்தம் (Total)</th>
-              <th>நிலை (Status)</th>
+              <th>பேமெண்ட் நிலை (Payment)</th>
+              <th>ஆர்டர் நிலை (Status)</th>
+              <th>பணம் செலுத்திய ID (Payment ID)</th>
               <th>செயல்கள் (Actions)</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map(order => (
-              <tr key={order.id}>
-                <td>#{order.id}</td>
-                <td>{order.customerName || 'N/A'}</td>
-                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                <td>₹{order.totalAmount}</td>
-                <td>
-                  <select 
-                    className={`status-select status-badge ${order.status.toLowerCase()}`}
-                    value={order.status}
-                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                  >
-                    <option value="PENDING">PENDING</option>
-                    <option value="SHIPPED">SHIPPED</option>
-                    <option value="DELIVERED">DELIVERED</option>
-                    <option value="CANCELLED">CANCELLED</option>
-                  </select>
-                </td>
-                <td>
-                  <button 
-                    className="btn btn-secondary btn-small"
-                    onClick={() => viewDetails(order)}
-                  >
-                    விவரங்கள் (Details)
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {orders.map(order => {
+              const itemsList = order.items.map(item => `${item.name} x ${item.quantity} (₹${item.price * item.quantity})`).join('\n');
+              const shareMessage = `வணக்கம்! (Hello!)\n\nA new order has been placed on DRV Stores.\n\nOrder Details:\n- Order ID: #${order.id}\n- Customer: ${order.customerName || 'N/A'}\n- Order Status: ${order.status}\n- Payment Status: ${order.paymentStatus}\n- Payment ID: ${order.paymentId || 'N/A'}\n\nItems List:\n${itemsList}\n\nTotal Bill Amount: ₹${order.totalAmount}\n\nRegards,\nDRV Stores Automated System`;
+              const mailLink = `mailto:yeshuv24@gmail.com?subject=Order Confirmation - #${order.id}&body=${encodeURIComponent(shareMessage)}`;
+
+              return (
+                <tr key={order.id}>
+                  <td>#{order.id}</td>
+                  <td>{order.customerName || 'N/A'}</td>
+                  <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                  <td>₹{order.totalAmount}</td>
+                  <td>
+                    <span className={`status-badge payment-${order.paymentStatus ? order.paymentStatus.toLowerCase() : 'pending'}`}>
+                      {order.paymentStatus || 'PENDING'}
+                    </span>
+                  </td>
+                  <td>
+                    <select 
+                      className={`status-select status-badge ${order.status.toLowerCase()}`}
+                      value={order.status}
+                      onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                    >
+                      <option value="PENDING">PENDING</option>
+                      <option value="SHIPPED">SHIPPED</option>
+                      <option value="DELIVERED">DELIVERED</option>
+                      <option value="CANCELLED">CANCELLED</option>
+                    </select>
+                  </td>
+                  <td>{order.paymentId || '---'}</td>
+                  <td className="actions-cell">
+                    <button 
+                      className="btn btn-secondary btn-small"
+                      onClick={() => viewDetails(order)}
+                    >
+                      Details
+                    </button>
+                    <a href={mailLink} className="btn-icon mail" title="Email Notification">
+                      <svg viewBox="0 0 24 24" width="20" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </a>
+                    <button 
+                      className="btn-icon delete" 
+                      onClick={() => handleDelete(order.id)}
+                      title="Delete Order"
+                    >
+                      <svg viewBox="0 0 24 24" width="20" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -105,7 +142,8 @@ const OrdersPage = () => {
               <p><strong>ஆர்டர் எண் (Order ID):</strong> #{selectedOrder.id}</p>
               <p><strong>வாடிக்கையாளர் (Customer):</strong> {selectedOrder.customerName}</p>
               <p><strong>தேதி (Date):</strong> {new Date(selectedOrder.createdAt).toLocaleString()}</p>
-              <p><strong>நிலை (Status):</strong> {selectedOrder.status}</p>
+              <p><strong>பேமெண்ட் நிலை (Payment Status):</strong> {selectedOrder.paymentStatus}</p>
+              <p><strong>ஆர்டர் நிலை (Status):</strong> {selectedOrder.status}</p>
             </div>
 
             <div className="items-list-detail">

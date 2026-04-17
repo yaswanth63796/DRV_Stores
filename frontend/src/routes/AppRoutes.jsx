@@ -15,6 +15,7 @@ import AdminDashboard from '../pages/AdminDashboard';
 import CreateBillPage from '../pages/CreateBillPage';
 import ViewBillPage from '../pages/ViewBillPage';
 import OrdersPage from '../pages/OrdersPage';
+import PaymentSuccessPage from '../pages/PaymentSuccessPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 const AppRoutes = () => {
@@ -90,6 +91,11 @@ const AppRoutes = () => {
       <Route path="/customer/orders" element={
         <PrivateRoute role="customer">
           <OrderHistoryPage />
+        </PrivateRoute>
+      } />
+      <Route path="/customer/payment-success" element={
+        <PrivateRoute role="customer">
+          <PaymentSuccessPage />
         </PrivateRoute>
       } />
       <Route path="/customer/bill/:orderId" element={

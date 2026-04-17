@@ -49,6 +49,27 @@
 .status-badge.delivered { background-color: #f0fff4; color: #2f855a; }
 .status-badge.cancelled { background-color: #fff5f5; color: #c53030; }
 
+.status-badge.payment-successful { 
+  background-color: #f0fff4; 
+  color: #2f855a; 
+  border: 1px solid #c6f6d5;
+}
+
+.status-badge.payment-pending { 
+  background-color: #fffaf0; 
+  color: #c05621; 
+  border: 1px solid #feebc8;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
 .details-modal-overlay {
   position: fixed;
   top: 0;
@@ -128,3 +149,36 @@
 .close-modal-btn:hover {
   color: #4a5568;
 }
+
+.actions-cell {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: #718096;
+}
+
+.btn-icon:hover {
+  transform: scale(1.1);
+}
+
+.btn-icon.mail:hover {
+  background-color: #ea4335;
+  color: white;
+}
+
+.btn-icon.delete:hover {
+  background-color: #e53e3e;
+  color: white;
+}
+
+

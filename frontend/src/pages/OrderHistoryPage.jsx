@@ -53,12 +53,6 @@ const OrderHistoryPage = () => {
               </div>
               <div className="order-footer">
                 <span>Total: ₹{order.totalAmount}</span>
-                <button
-                  className="btn btn-secondary btn-small"
-                  onClick={() => navigate(`/customer/bill/${order.id}`)}
-                >
-                  View Bill
-                </button>
               </div>
             </div>
           ))}
