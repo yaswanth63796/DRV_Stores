@@ -1,0 +1,22 @@
+.not-found {
+  text-align: center;
+  padding: 100px 20px;
+  min-height: calc(100vh - 80px);
+}
+
+.not-found h1 {
+  font-size: 8rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.not-found h2 {
+  font-size: 2rem;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.not-found p {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+}

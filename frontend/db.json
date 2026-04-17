@@ -1,0 +1,576 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Customer",
+      "username": "John Customer",
+      "email": "customer@test.com",
+      "password": "$2a$10$8K1p/a0dL3.ksOKVrfEOaOe1lXKyHXyHXyHXyHXyHXyHXyHXyHXy",
+      "role": "customer",
+      "phone": "1234567890"
+    },
+    {
+      "id": "2",
+      "name": "Jane Shopkeeper",
+      "username": "Jane Shopkeeper",
+      "email": "shopkeeper@test.com",
+      "password": "$2a$10$8K1p/a0dL3.ksOKVrfEOaOe1lXKyHXyHXyHXyHXyHXyHXyHXyHXy",
+      "role": "shopkeeper",
+      "phone": "0987654321"
+    },
+    {
+      "id": "1772879355264",
+      "email": "Kalavathi123@gmail.com",
+      "password": "yaswanth",
+      "role": "shopkeeper"
+    }
+  ],
+  "products": [
+    {
+      "id": "2",
+      "name": "பருப்பு (Dal)",
+      "description": "துவரம் பருப்பு",
+      "price": 120,
+      "stock": 30,
+      "category": "மளிகை (Groceries)"
+    },
+    {
+      "id": "3",
+      "name": "எண்ணெய் (Oil)",
+      "description": "சூரியகாந்தி எண்ணெய்",
+      "price": 150,
+      "stock": 8,
+      "category": "எண்ணெய் (Oil)"
+    },
+    {
+      "id": "4",
+      "name": "சர்க்கரை (Sugar)",
+      "description": "வெள்ளை சர்க்கரை",
+      "price": 45,
+      "stock": 40,
+      "category": "மளிகை (Groceries)"
+    },
+    {
+      "id": "5",
+      "name": "உப்பு (Salt)",
+      "description": "டாடா உப்பு",
+      "price": 20,
+      "stock": 60,
+      "category": "மளிகை (Groceries)"
+    },
+    {
+      "id": "6",
+      "name": "தேயிலை (Tea)",
+      "description": "டாடா தேயிலை தூள்",
+      "price": 180,
+      "stock": 25,
+      "category": "பானங்கள் (Beverages)"
+    },
+    {
+      "name": "மசாலா (Spices)",
+      "description": "கரம் மசாலா தூள்",
+      "price": 90,
+      "stock": "40",
+      "category": "மசாலா (Spices)",
+      "id": "7"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "status": "completed",
+      "createdAt": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "3",
+          "name": "எண்ணெய் (Oil)",
+          "quantity": 1,
+          "price": 150
+        }
+      ],
+      "totalAmount": 150,
+      "status": "pending",
+      "createdAt": "2024-01-20T14:20:00Z"
+    },
+    {
+      "id": "1772873480948",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 1,
+          "price": 80
+        }
+      ],
+      "totalAmount": null,
+      "createdAt": "2026-03-07T08:51:20.948Z"
+    },
+    {
+      "id": "1772873995813",
+      "items": [
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": null,
+      "createdAt": "2026-03-07T08:59:55.813Z"
+    },
+    {
+      "id": "1772878391649",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 1,
+          "price": 80
+        }
+      ],
+      "totalAmount": null,
+      "createdAt": "2026-03-07T10:13:11.649Z"
+    },
+    {
+      "id": "1772878426127",
+      "items": [
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": null,
+      "createdAt": "2026-03-07T10:13:46.127Z"
+    },
+    {
+      "id": "1772879061243",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 1,
+          "price": 80
+        }
+      ],
+      "totalAmount": 80,
+      "status": "pending",
+      "createdAt": "2026-03-07T10:24:21.243Z"
+    },
+    {
+      "id": "1772879113241",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "6",
+          "name": "தேயிலை (Tea)",
+          "quantity": 1,
+          "price": 180
+        },
+        {
+          "productId": "8",
+          "name": "சோப்பு (Soap)",
+          "quantity": 3,
+          "price": 35
+        },
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 1,
+          "price": 80
+        }
+      ],
+      "totalAmount": 365,
+      "status": "pending",
+      "createdAt": "2026-03-07T10:25:13.241Z"
+    },
+    {
+      "id": "1772879822834",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 1,
+          "price": 80
+        }
+      ],
+      "totalAmount": 80,
+      "status": "pending",
+      "createdAt": "2026-03-07T10:37:02.834Z"
+    },
+    {
+      "id": "1772880121828",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 120,
+      "status": "pending",
+      "createdAt": "2026-03-07T10:42:01.828Z"
+    },
+    {
+      "id": "1772880204428",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 120,
+      "status": "pending",
+      "createdAt": "2026-03-07T10:43:24.428Z"
+    },
+    {
+      "id": "1772880660469",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 1,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 200,
+      "status": "pending",
+      "createdAt": "2026-03-07T10:51:00.469Z"
+    },
+    {
+      "id": "1772880769086",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 120,
+      "status": "pending",
+      "createdAt": "2026-03-07T10:52:49.086Z"
+    },
+    {
+      "id": "1772881477471",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "3",
+          "name": "எண்ணெய் (Oil)",
+          "quantity": 1,
+          "price": 150
+        }
+      ],
+      "totalAmount": 150,
+      "status": "pending",
+      "createdAt": "2026-03-07T11:04:37.471Z"
+    },
+    {
+      "id": "1772946616343",
+      "userId": "1",
+      "items": [
+        {
+          "productId": "3",
+          "name": "எண்ணெய் (Oil)",
+          "quantity": 1,
+          "price": 150
+        }
+      ],
+      "totalAmount": 150,
+      "status": "pending",
+      "createdAt": "2026-03-08T05:10:16.343Z"
+    }
+  ],
+  "bills": [
+    {
+      "id": "1",
+      "orderId": "1",
+      "userId": "1",
+      "customerName": "John Customer",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2024-01-15T10:35:00Z"
+    },
+    {
+      "id": "1772873658955",
+      "orderId": "1",
+      "userId": "1",
+      "customerName": "Customer",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-07T08:54:18.955Z"
+    },
+    {
+      "id": "1772873661179",
+      "orderId": "1",
+      "userId": "1",
+      "customerName": "Customer",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-07T08:54:21.179Z"
+    },
+    {
+      "id": "1772873664646",
+      "orderId": "1",
+      "userId": "1",
+      "customerName": "Customer",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-07T08:54:24.646Z"
+    },
+    {
+      "id": "1772873686235",
+      "orderId": "1",
+      "userId": "1",
+      "customerName": "Customer",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-07T08:54:46.235Z"
+    },
+    {
+      "id": "1772879259054",
+      "orderId": null,
+      "userId": null,
+      "customerName": "Yaswanth",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 1,
+          "price": 80
+        },
+        {
+          "productId": "6",
+          "name": "தேயிலை (Tea)",
+          "quantity": 1,
+          "price": 180
+        },
+        {
+          "productId": "4",
+          "name": "சர்க்கரை (Sugar)",
+          "quantity": 1,
+          "price": 45
+        },
+        {
+          "productId": "5",
+          "name": "உப்பு (Salt)",
+          "quantity": 1,
+          "price": 20
+        }
+      ],
+      "totalAmount": 325,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-07T10:27:39.054Z"
+    },
+    {
+      "id": "1772879668929",
+      "orderId": "1",
+      "userId": "1",
+      "customerName": "John Customer",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-07T10:34:28.929Z"
+    },
+    {
+      "id": "1772881413232",
+      "orderId": null,
+      "userId": null,
+      "customerName": "yaswanth",
+      "items": [
+        {
+          "productId": "3",
+          "name": "எண்ணெய் (Oil)",
+          "quantity": 1,
+          "price": 150
+        },
+        {
+          "productId": "4",
+          "name": "சர்க்கரை (Sugar)",
+          "quantity": 1,
+          "price": 45
+        }
+      ],
+      "totalAmount": 195,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-07T11:03:33.232Z"
+    },
+    {
+      "id": "1772946814690",
+      "orderId": null,
+      "userId": null,
+      "customerName": "mohan",
+      "items": [
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        },
+        {
+          "productId": "5",
+          "name": "உப்பு (Salt)",
+          "quantity": 1,
+          "price": 20
+        }
+      ],
+      "totalAmount": 140,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-08T05:13:34.690Z"
+    },
+    {
+      "id": "1772946893889",
+      "orderId": "1",
+      "userId": "1",
+      "customerName": "John Customer",
+      "items": [
+        {
+          "productId": "1",
+          "name": "அரிசி (Rice)",
+          "quantity": 2,
+          "price": 80
+        },
+        {
+          "productId": "2",
+          "name": "பருப்பு (Dal)",
+          "quantity": 1,
+          "price": 120
+        }
+      ],
+      "totalAmount": 280,
+      "paymentMethod": "cash",
+      "status": "paid",
+      "createdAt": "2026-03-08T05:14:53.889Z"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
