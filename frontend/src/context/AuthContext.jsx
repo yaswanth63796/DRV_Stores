@@ -29,7 +29,11 @@ export const AuthProvider = ({ children }) => {
       }
       
       const { token, username: resUsername, authorities } = response.data;
-      const role = authorities?.[0]?.replace('ROLE_', '').toLowerCase() || 'customer';
+      // Spring Security authorities are objects like { authority: "ROLE_CUSTOMER" }
+      const authorityString = authorities?.[0]?.authority || authorities?.[0] || '';
+      const role = typeof authorityString === 'string' 
+        ? authorityString.replace('ROLE_', '').toLowerCase() 
+        : 'customer';
       
       const loggedUser = { username: resUsername, role };
       
