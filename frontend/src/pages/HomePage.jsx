@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation, EffectFade } from 'swiper/modules';
@@ -11,6 +11,10 @@ import '../styles/HomePage.css';
 
 const HomePage = () => {
   const { user } = useAuth();
+
+  if (user) {
+    return <Navigate to={`/${user.role}/dashboard`} replace />;
+  }
 
   const sliderImages = [
     {

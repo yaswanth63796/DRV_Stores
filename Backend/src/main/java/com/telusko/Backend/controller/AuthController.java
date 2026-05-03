@@ -62,8 +62,12 @@ public class AuthController {
             Map<String, Object> response = new HashMap<>();
             response.put("token", token);
             response.put("username", userDetails.getUsername());
-            userService.findByUsername(userDetails.getUsername())
-                    .ifPresent(user -> response.put("id", user.getId()));
+            if (userDetails instanceof User) {
+                response.put("id", ((User) userDetails).getId());
+            } else {
+                userService.findByUsername(userDetails.getUsername())
+                        .ifPresent(user -> response.put("id", user.getId()));
+            }
             response.put("authorities", userDetails.getAuthorities());
             response.put("message", "Login successful");
 

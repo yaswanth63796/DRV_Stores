@@ -54,6 +54,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/products/**").authenticated()
                         .requestMatchers("/api/payments/**").permitAll()
                         .requestMatchers("/api/bills/**").authenticated()
+                        .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

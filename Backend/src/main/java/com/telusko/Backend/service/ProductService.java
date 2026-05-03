@@ -22,6 +22,10 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public List<Product> getLowStockProducts() {
+        return productRepository.findByStockLessThan(10); // threshold
+    }
+
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }

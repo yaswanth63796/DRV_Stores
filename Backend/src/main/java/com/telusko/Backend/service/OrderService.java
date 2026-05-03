@@ -43,8 +43,8 @@ public class OrderService {
     public Order createOrder(Map<String, Object> orderRequest) {
         Order order = new Order();
         
-        if (orderRequest.containsKey("userId")) {
-            order.setUserId(((Number) orderRequest.get("userId")).longValue());
+        if (orderRequest.containsKey("userId") && orderRequest.get("userId") != null) {
+            order.setUserId(Long.valueOf(orderRequest.get("userId").toString()));
         }
         
         order.setStatus(OrderStatus.PENDING);
@@ -56,10 +56,10 @@ public class OrderService {
         
         for (Map<String, Object> itemData : itemsData) {
             OrderItem item = new OrderItem();
-            item.setProductId(((Number) itemData.get("productId")).longValue());
+            item.setProductId(Long.valueOf(itemData.get("productId").toString()));
             item.setName((String) itemData.get("name"));
-            item.setQuantity(((Number) itemData.get("quantity")).intValue());
-            item.setPrice(((Number) itemData.get("price")).doubleValue());
+            item.setQuantity(Integer.valueOf(itemData.get("quantity").toString()));
+            item.setPrice(Double.valueOf(itemData.get("price").toString()));
             item.setOrder(order);
             totalAmount += item.getPrice() * item.getQuantity();
             orderItems.add(item);

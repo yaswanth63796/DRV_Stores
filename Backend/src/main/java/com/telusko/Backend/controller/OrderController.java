@@ -35,7 +35,10 @@ public class OrderController {
             map.put("items", order.getItems());
             map.put("paymentId", order.getRazorpayPaymentId());
             
-            com.telusko.Backend.entity.User user = userService.getUserById(order.getUserId());
+            com.telusko.Backend.entity.User user = null;
+            if (order.getUserId() != null) {
+                user = userService.getUserById(order.getUserId());
+            }
             map.put("customerName", user != null ? (user.getName() != null ? user.getName() : user.getUsername()) : "Customer");
             return map;
         }).collect(java.util.stream.Collectors.toList());

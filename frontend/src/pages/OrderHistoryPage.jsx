@@ -13,6 +13,15 @@ const OrderHistoryPage = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      const storedUserStr = localStorage.getItem('user');
+      const storedUser = storedUserStr ? JSON.parse(storedUserStr) : null;
+      
+      if (storedUser && !storedUser.id) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+        return;
+      }
       try {
         setLoading(true);
         const response = await getMyOrders();

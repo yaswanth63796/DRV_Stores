@@ -15,6 +15,16 @@ const CustomerDashboard = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
+      const storedUserStr = localStorage.getItem('user');
+      const storedUser = storedUserStr ? JSON.parse(storedUserStr) : null;
+      
+      if (storedUser && !storedUser.id) {
+        // If user is stored but ID is missing (legacy broken session), force logout
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+        return;
+      }
       try {
         setLoading(true);
         const response = await getMyOrders();

@@ -1,8 +1,25 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
+import Spinner from './Spinner';
 
-// Temporarily allow all routes to be accessible without authentication.
-// Revert this when you want to enforce auth again.
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = ({ children, role }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // If a role is specified and the user's role doesn't match, you can redirect them
+  // For now, just ensure they are logged in
+  if (role && user.role !== role) {
+    return <Navigate to={`/${user.role}/dashboard`} replace />;
+  }
+
   return children;
 };
 
