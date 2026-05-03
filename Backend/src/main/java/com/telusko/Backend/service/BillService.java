@@ -17,12 +17,18 @@ public class BillService {
     @Autowired
     private BillRepository billRepository;
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public List<Bill> getAllBills() {
-        return billRepository.findAll();
+        List<Bill> bills = billRepository.findAll();
+        bills.forEach(bill -> bill.getItems().size());
+        return bills;
     }
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public Optional<Bill> getBillById(Long id) {
-        return billRepository.findById(id);
+        Optional<Bill> bill = billRepository.findById(id);
+        bill.ifPresent(b -> b.getItems().size());
+        return bill;
     }
 
     public Bill createBill(Map<String, Object> billRequest) {
@@ -61,12 +67,15 @@ public class BillService {
         return billRepository.save(bill);
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public Optional<Bill> updateBillStatus(Long id, BillStatus status) {
         Optional<Bill> billOptional = billRepository.findById(id);
         if (billOptional.isPresent()) {
             Bill bill = billOptional.get();
             bill.setStatus(status);
-            return Optional.of(billRepository.save(bill));
+            Bill savedBill = billRepository.save(bill);
+            savedBill.getItems().size();
+            return Optional.of(savedBill);
         }
         return Optional.empty();
     }

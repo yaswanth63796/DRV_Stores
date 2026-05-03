@@ -27,7 +27,7 @@ public class Order {
     private OrderStatus status;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private PaymentStatus paymentStatus;
     
     @CreationTimestamp

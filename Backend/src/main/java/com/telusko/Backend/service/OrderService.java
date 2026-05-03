@@ -28,16 +28,25 @@ public class OrderService {
     @Value("${razorpay.key.secret}")
     private String razorpayKeySecret;
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+        List<Order> orders = orderRepository.findAll();
+        orders.forEach(order -> order.getItems().size());
+        return orders;
     }
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public List<Order> getOrdersByUserId(Long userId) {
-        return orderRepository.findByUserId(userId);
+        List<Order> orders = orderRepository.findByUserId(userId);
+        orders.forEach(order -> order.getItems().size());
+        return orders;
     }
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public Optional<Order> getOrderById(Long id) {
-        return orderRepository.findById(id);
+        Optional<Order> order = orderRepository.findById(id);
+        order.ifPresent(o -> o.getItems().size());
+        return order;
     }
 
     public Order createOrder(Map<String, Object> orderRequest) {
@@ -91,16 +100,20 @@ public class OrderService {
         }
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public Optional<Order> updateOrderStatus(Long id, OrderStatus status) {
         Optional<Order> orderOptional = orderRepository.findById(id);
         if (orderOptional.isPresent()) {
             Order order = orderOptional.get();
             order.setStatus(status);
-            return Optional.of(orderRepository.save(order));
+            Order savedOrder = orderRepository.save(order);
+            savedOrder.getItems().size(); // Initialize items
+            return Optional.of(savedOrder);
         }
         return Optional.empty();
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public Optional<Order> updatePaymentStatus(Long id, PaymentStatus status, String paymentId) {
         Optional<Order> orderOptional = orderRepository.findById(id);
         if (orderOptional.isPresent()) {
@@ -109,7 +122,9 @@ public class OrderService {
             if (paymentId != null) {
                 order.setRazorpayPaymentId(paymentId);
             }
-            return Optional.of(orderRepository.save(order));
+            Order savedOrder = orderRepository.save(order);
+            savedOrder.getItems().size(); // Initialize items
+            return Optional.of(savedOrder);
         }
         return Optional.empty();
     }

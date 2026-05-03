@@ -23,25 +23,31 @@ public class OrderController {
     private com.telusko.Backend.service.UserService userService;
 
     @GetMapping
-    public List<Map<String, Object>> getAllOrders() {
-        return orderService.getAllOrders().stream().map(order -> {
-            Map<String, Object> map = new java.util.HashMap<>();
-            map.put("id", order.getId());
-            map.put("userId", order.getUserId());
-            map.put("status", order.getStatus());
-            map.put("paymentStatus", order.getPaymentStatus());
-            map.put("totalAmount", order.getTotalAmount());
-            map.put("createdAt", order.getCreatedAt());
-            map.put("items", order.getItems());
-            map.put("paymentId", order.getRazorpayPaymentId());
-            
-            com.telusko.Backend.entity.User user = null;
-            if (order.getUserId() != null) {
-                user = userService.getUserById(order.getUserId());
-            }
-            map.put("customerName", user != null ? (user.getName() != null ? user.getName() : user.getUsername()) : "Customer");
-            return map;
-        }).collect(java.util.stream.Collectors.toList());
+    public ResponseEntity<?> getAllOrders() {
+        try {
+            List<Map<String, Object>> result = orderService.getAllOrders().stream().map(order -> {
+                Map<String, Object> map = new java.util.HashMap<>();
+                map.put("id", order.getId());
+                map.put("userId", order.getUserId());
+                map.put("status", order.getStatus());
+                map.put("paymentStatus", order.getPaymentStatus());
+                map.put("totalAmount", order.getTotalAmount());
+                map.put("createdAt", order.getCreatedAt());
+                map.put("items", order.getItems());
+                map.put("paymentId", order.getRazorpayPaymentId());
+                
+                com.telusko.Backend.entity.User user = null;
+                if (order.getUserId() != null) {
+                    user = userService.getUserById(order.getUserId());
+                }
+                map.put("customerName", user != null ? (user.getName() != null ? user.getName() : user.getUsername()) : "Customer");
+                return map;
+            }).collect(java.util.stream.Collectors.toList());
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(java.util.Collections.singletonMap("error_message", e.getMessage() != null ? e.getMessage() : e.getClass().getName()));
+        }
     }
 
     @GetMapping(params = "userId")
