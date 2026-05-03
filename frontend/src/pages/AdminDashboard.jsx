@@ -20,7 +20,7 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const billsRes = await api.get('/bills');
+      const billsRes = await api.get('/api/bills');
       setBills(billsRes.data);
     } catch (err) {
       setError('Failed to load data');
