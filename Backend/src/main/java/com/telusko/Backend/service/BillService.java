@@ -3,7 +3,9 @@ package com.telusko.Backend.service;
 import com.telusko.Backend.entity.Bill;
 import com.telusko.Backend.entity.BillItem;
 import com.telusko.Backend.entity.BillStatus;
+import com.telusko.Backend.entity.Product;
 import com.telusko.Backend.repository.BillRepository;
+import com.telusko.Backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class BillService {
 
     @Autowired
     private BillRepository billRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public List<Bill> getAllBills() {
@@ -64,7 +69,22 @@ public class BillService {
         bill.setTotalAmount(totalAmount);
         bill.setItems(billItems); // Enable properly linking items for Cascade save
         
-        return billRepository.save(bill);
+        Bill savedBill = billRepository.save(bill);
+
+        // Reduce product stock for manual bills (where orderId is null)
+        if (savedBill.getOrderId() == null || savedBill.getOrderId() == 0) {
+            for (BillItem item : billItems) {
+                Optional<Product> productOpt = productRepository.findById(item.getProductId());
+                if (productOpt.isPresent()) {
+                    Product product = productOpt.get();
+                    int newStock = product.getStock() - item.getQuantity();
+                    product.setStock(newStock >= 0 ? newStock : 0);
+                    productRepository.save(product);
+                }
+            }
+        }
+
+        return savedBill;
     }
 
     @org.springframework.transaction.annotation.Transactional

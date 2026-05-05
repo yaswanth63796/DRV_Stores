@@ -4,7 +4,9 @@ import com.telusko.Backend.entity.Order;
 import com.telusko.Backend.entity.OrderItem;
 import com.telusko.Backend.entity.OrderStatus;
 import com.telusko.Backend.entity.PaymentStatus;
+import com.telusko.Backend.entity.Product;
 import com.telusko.Backend.repository.OrderRepository;
+import com.telusko.Backend.repository.ProductRepository;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 import org.json.JSONObject;
@@ -21,6 +23,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Value("${razorpay.key.id}")
     private String razorpayKeyId;
@@ -124,6 +129,20 @@ public class OrderService {
             }
             Order savedOrder = orderRepository.save(order);
             savedOrder.getItems().size(); // Initialize items
+
+            // Reduce product stock if payment is successful
+            if (status == PaymentStatus.SUCCESSFUL) {
+                for (OrderItem item : savedOrder.getItems()) {
+                    Optional<Product> productOpt = productRepository.findById(item.getProductId());
+                    if (productOpt.isPresent()) {
+                        Product product = productOpt.get();
+                        int newStock = product.getStock() - item.getQuantity();
+                        product.setStock(newStock >= 0 ? newStock : 0);
+                        productRepository.save(product);
+                    }
+                }
+            }
+
             return Optional.of(savedOrder);
         }
         return Optional.empty();
