@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getOrders, updateOrderStatus } from '../services/orderService';
+import { getOrders, updateOrderStatus, deleteOrder } from '../services/orderService';
 import Spinner from '../components/Spinner';
 import Alert from '../components/Alert';
 import '../styles/OrdersPage.css';

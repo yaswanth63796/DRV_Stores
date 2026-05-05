@@ -103,3 +103,25 @@
   font-size: 0.875rem;
   margin-right: 0.5rem;
 }
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding: 1.5rem;
+  }
+
+  .orders-section, .bills-section {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .orders-table {
+    min-width: 600px; /* Ensure table doesn't get too squashed */
+  }
+}

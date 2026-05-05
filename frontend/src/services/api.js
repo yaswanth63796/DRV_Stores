@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://drvstores-api.onrender.com',
+  baseURL: 'https://drvstores-api.onrender.com', // Production URL
   headers: {
     'Content-Type': 'application/json',
   },

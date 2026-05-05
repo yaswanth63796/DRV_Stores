@@ -1,14 +1,18 @@
 .product-card {
-  transition: transform 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin: 10px;
   flex: 1 1 300px;
   max-width: 300px;
   overflow: hidden;
+  border: 1px solid #cbd5e1 !important;
+  border-top: 4px solid var(--primary) !important;
+  background-color: #ffffff;
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12) !important;
+  border-color: var(--primary) !important;
 }
 
 .product-image {

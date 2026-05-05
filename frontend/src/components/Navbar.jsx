@@ -10,7 +10,7 @@ const Navbar = () => {
           DRV STORES
         </Link>
         <div className="nav-actions">
-          <Link to="/login" className="btn" style={{ color: '#FFFFFF', border: '2px solid rgba(255, 255, 255, 0.8)', backgroundColor: 'transparent' }}>
+          <Link to="/login" className="btn btn-nav-outline">
             Sign In
           </Link>
           <Link to="/register" className="btn btn-primary">

@@ -45,26 +45,41 @@ const OrderHistoryPage = () => {
       {orders.length === 0 ? (
         <p className="no-orders">You haven't placed any orders yet.</p>
       ) : (
-        <div className="orders-list">
-          {orders.map(order => (
-            <div key={order.id} className="order-card card">
-              <div className="order-header">
-                <span>Order #{order.id}</span>
-                <span>{new Date(order.createdAt).toLocaleDateString()}</span>
-              </div>
-              <div className="order-items">
-                {order.items.map((item, idx) => (
-                  <div key={idx} className="order-item">
-                    <span>{item.name} x {item.quantity}</span>
-                    <span>₹{item.price * item.quantity}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="order-footer">
-                <span>Total: ₹{order.totalAmount}</span>
-              </div>
-            </div>
-          ))}
+        <div className="table-container">
+          <table className="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Status</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map(order => (
+                <tr key={order.id}>
+                  <td><strong>#{order.id}</strong></td>
+                  <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                  <td>
+                    <ul className="table-item-list">
+                      {order.items.map((item, idx) => (
+                        <li key={idx}>
+                          {item.name} <span className="item-qty">x{item.quantity}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td>
+                    <span className={`status-badge ${order.status ? order.status.toLowerCase() : 'pending'}`}>
+                      {order.status || 'PENDING'}
+                    </span>
+                  </td>
+                  <td className="price-col">₹{order.totalAmount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

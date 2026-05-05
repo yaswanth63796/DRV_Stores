@@ -33,6 +33,16 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  .dashboard-content-wrapper {
+    overflow-y: visible;
+  }
+
   .dashboard-main {
     padding: 1rem;
   }
